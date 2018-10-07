@@ -1,13 +1,6 @@
 import React from 'react';
 
-class Book extends React.Component {
-  state = {
-    book: []
-  }
-
-  render() {
-    const { book, updateShelf } = this.props
-
+const Book = ({ book, updateShelf }) => {
     return (
         <li>
               <div className="book">
@@ -20,18 +13,16 @@ class Book extends React.Component {
                       <option value="currentlyReading">Currently Reading</option>
                       <option value="wantToRead">Want to Read</option>
                       <option value="read">Read</option>
-                      <option value="none">None</option>
+                      <option value="noShelf">No Shelf</option>
                     </select>
                   </div>
                 </div>
                 <div className="book-title">{book.title}</div>
-                {/* display one author only, or no author if none found */}
-                <div className="book-authors">{book.authors[0] || 'No author'}</div>
+                <div className="book-authors">{book.authors && book.authors.join(" & ")}</div>
               </div>
         </li>
 
     )
   }
-}
 
 export default Book

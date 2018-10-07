@@ -14,9 +14,10 @@ class BookList extends React.Component {
           </div>
           <div className="list-books-content">
             <div>
-              <Shelf id="currentlyReading" name="Currently Reading" books={books} updateShelf={updateShelf} />
-              <Shelf id="wantToRead" name="Want to Read" books={books} updateShelf={updateShelf} />
-              <Shelf id="read" name="Read" books={books} updateShelf={updateShelf} />
+              {/* filter books list based on the shelf it's on */}
+              <Shelf name="Currently Reading" shelfBooks={books.filter(book => book.shelf === 'currentlyReading')} updateShelf={updateShelf} />
+              <Shelf name="Want to Read" shelfBooks={books.filter(book => book.shelf === 'wantToRead')} updateShelf={updateShelf} />
+              <Shelf name="Read" shelfBooks={books.filter(book => book.shelf === 'read')} updateShelf={updateShelf} />
             </div>
           </div>
           <div className="open-search">
