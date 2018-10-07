@@ -24,7 +24,7 @@ class Search extends Component {
         .then((showingBooks) => {
           if (showingBooks.error){ /* if there is an error show nothing */
             this.setState({ showingBooks: []} )
-          } else {
+          } else if(this.state.query === query){
           this.setState({ showingBooks: showingBooks }) /* otherwise display our books */
           showingBooks.sort(sortBy('title'))
           }

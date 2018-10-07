@@ -20,24 +20,25 @@ class BooksApp extends React.Component {
 
 /* change the shelf */
   updateShelf = (thisBook, shelf) => {
-    this.setState(prev => { /* set state */
-      let addBook = true;
-      prev.books.forEach(book => {
-        if(thisBook.id === book.id) /* check if we're adding a new book */
-          addBook = false;
-      })
-      if(addBook)
-        prev.books.splice(1, 0, thisBook); /* add new book to list of books */
-      return ({
-        books: prev.books.map(book => {
-          if(book.id === thisBook.id) /* if the book matches the selected book */
-            book.shelf = shelf;  /* update the shelf value */
-          return book;
+    BooksAPI.update(thisBook, shelf).then(() => { /* update the book's shelf */
+      this.setState(prev => { /* set state */
+        let addBook = true;
+        prev.books.forEach(book => {
+          if(thisBook.id === book.id) /* check if we're adding a new book */
+            addBook = false;
         })
-        .filter(b => b.shelf !== "none") /* don't display books without a shelf */
+        if(addBook)
+          prev.books.splice(1, 0, thisBook); /* add new book to list of books */
+        return ({
+          books: prev.books.map(book => {
+            if(book.id === thisBook.id) /* if the book matches the selected book */
+              book.shelf = shelf;  /* update the shelf value */
+            return book;
+          })
+          .filter(b => b.shelf !== "none") /* don't display books without a shelf */
+        })
       })
     })
-    BooksAPI.update(thisBook, shelf) /* update the book's shelf */
   }
 
 
