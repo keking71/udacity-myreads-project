@@ -21,12 +21,19 @@ class Search extends Component {
   searchBooks = (query) => {
     if (query) { /* if there is a query */
       BooksAPI.search(query) /* search using it */
-        .then((showingBooks) => {
-          if (showingBooks.error){ /* if there is an error show nothing */
+        .then((bookResults) => {
+          if (bookResults.error){ /* if there is an error show nothing */
             this.setState({ showingBooks: []} )
           } else if(this.state.query === query){
-          this.setState({ showingBooks: showingBooks }) /* otherwise display our books */
-          showingBooks.sort(sortBy('title'))
+            let modifiedResults = bookResults.map(book => { /* map over results */
+
+								book.shelf = "undefined"
+								let bookShelf = this.props.currentBooks.some(b => b.id === book.id);
+								book.shelf = bookShelf ? this.props.currentBooks.find(b => b.id === book.id).shelf : "none";
+								return book;
+							});
+            modifiedResults.sort(sortBy('title')) 
+            this.setState({ showingBooks: modifiedResults }) /* otherwise display our books */
           }
         })
       } else {
