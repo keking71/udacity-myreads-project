@@ -27,12 +27,12 @@ class Search extends Component {
           } else if(this.state.query === query){
             let modifiedResults = bookResults.map(book => { /* map over results */
 
-								book.shelf = "undefined"
+								book.shelf = "none"
 								let bookShelf = this.props.currentBooks.some(b => b.id === book.id);
 								book.shelf = bookShelf ? this.props.currentBooks.find(b => b.id === book.id).shelf : "none";
 								return book;
 							});
-            modifiedResults.sort(sortBy('title')) 
+            modifiedResults.sort(sortBy('title'))
             this.setState({ showingBooks: modifiedResults }) /* otherwise display our books */
           }
         })
